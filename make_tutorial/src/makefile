@@ -5,9 +5,11 @@ CFLAGS=-I$(IDIR)
 _DEPS = hellomake.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-OBJ = hellomake.o hellofunc.o 
+ODIR=obj
+_OBJ = hellomake.o hellofunc.o 
+OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-%.o: %.c $(DEPS)
+$(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 hellomake: $(OBJ) 
