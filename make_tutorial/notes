@@ -1,0 +1,13 @@
+## Heads up
+
+- make w/ no args executes the first rule in makefile
+- dependent files follow the ':' after the rule name.
+  - If those files change, make will re-execute the rule.   
+
+  [Rule Name]: [files...]
+  hellomake: hellomake.c hellofunc.c
+    gcc -o hellomake hellomake.c hellofunc.c -I. 
+
+- ^^ A tab must start every command
+  - e.g. the tab preceding gcc
+
