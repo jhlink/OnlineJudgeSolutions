@@ -1,6 +1,10 @@
+IDIR =../include
 CC=gcc
-CFLAGS=-I.
-DEPS = hellomake.h
+CFLAGS=-I$(IDIR)
+
+_DEPS = hellomake.h
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+
 OBJ = hellomake.o hellofunc.o 
 
 %.o: %.c $(DEPS)

@@ -67,5 +67,21 @@ v1:  gcc -o hellomake hellomake.c hellofunc.c -I.
 v2: $(CC) -o hellomake hellomake.o hellofunc.o
 v3: $(CC) -o $@ $^ $(CFLAGS) 
 
+---
+
+### Makefile 5
+
+***
+IDIR =../include
+CFLAGS=-I$(IDIR)
+_DEPS = hellomake.h
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+***
+
+- Store header files in include directory.
+  - Fix references to header files   
+  - $(patsubst %,$( x )/%,$( y ))
+    - 'x' : target directory
+    - 'y' : dependency files  
 
 
