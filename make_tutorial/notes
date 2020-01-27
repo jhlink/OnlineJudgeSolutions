@@ -90,4 +90,6 @@ $(ODIR)/%.o: %.c $(DEPS)
 ***
 
 - When generating .o files, ensure that %o rule is prefixed with $(ODIR)/ pattern 
+- Make defines macros to declare when using any libraries
+  - e.g. -lm : math library
 
