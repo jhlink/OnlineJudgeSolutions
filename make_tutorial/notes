@@ -49,3 +49,23 @@ DEPS = hellomake.h
   - '$<' : the first item in the dependency list
   - 'CFLAGS' : Add compilation flags from CFLAGS macro 
 
+---
+
+### Makefile 4
+
+***
+OBJ = hellomake.o hellofunc.o 
+hellomake: $(OBJ) 
+	$(CC) -o $@ $^ $(CFLAGS) 
+***
+
+- $@ : Left side of the :
+- $^ : Right side of the :
+
+- Notice Pattern: Compiler + Output File + Dependencies + Compile Flags
+v1:  gcc -o hellomake hellomake.c hellofunc.c -I.
+v2: $(CC) -o hellomake hellomake.o hellofunc.o
+v3: $(CC) -o $@ $^ $(CFLAGS) 
+
+
+
