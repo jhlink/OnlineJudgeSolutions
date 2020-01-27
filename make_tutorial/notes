@@ -84,4 +84,10 @@ DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
     - 'x' : target directory
     - 'y' : dependency files  
 
+***
+$(ODIR)/%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+***
+
+- When generating .o files, ensure that %o rule is prefixed with $(ODIR)/ pattern 
 
