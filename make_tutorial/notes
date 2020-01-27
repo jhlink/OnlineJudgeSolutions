@@ -1,5 +1,7 @@
 ## Heads up
 
+### Makefile 1
+
 - make w/ no args executes the first rule in makefile
 - dependent files follow the ':' after the rule name.
   - If those files change, make will re-execute the rule.   
@@ -11,3 +13,17 @@
 - ^^ A tab must start every command
   - e.g. the tab preceding gcc
 
+--- 
+
+### Makefile 2
+
+- The *CC* macro defines the C compiler to use. 
+- The *CFLAGS* macro defines the flags to pass to the compilation cmd.
+- Placing object files in the dependency list and in the rule informs make to compile the .c files individually then build the hellomake executable. 
+  - Missing dependency on include files -> recompile doesn't occur if header file changed.  
+
+  CC=gcc        // Compiler macro
+  CFLAGS=-I.    // Compiler Flags macro
+  
+  hellomake: hellomake.o hellofunc.o              // Object files instead of header/TU files
+  	$(CC) -o hellomake hellomake.o hellofunc.o 
