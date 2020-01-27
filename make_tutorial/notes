@@ -93,3 +93,23 @@ $(ODIR)/%.o: %.c $(DEPS)
 - Make defines macros to declare when using any libraries
   - e.g. -lm : math library
 
+***
+.PHONY: clean
+***
+
+- Phony rule prevents make from doing something with a file named _clean_.
+
+***
+clean:
+		rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~
+***
+
+- Creates a make rule that removes all artifacts from the [build process](https://stackoverflow.com/questions/38002190/what-is-happening-in-this-make-clean).
+  - $(ODIR)/*.o : Removes all object files
+  - *~ : Removes all files ending with ~.
+    - Emacs creates a backup copy under [filename]~ 
+  - core : When you normally get when enabling core dumps, a program crashes, and systemd isn't used.
+    - Used to debug a crash. 
+  - $(INCDIR)/*~ : Match emacs backup files in INCDIR
+    - If INCDIR isn't set, tries to find backup files in root dir. 
+    - Default behaviour if pattern doesn't match files is to leave it unexpanded. 

@@ -24,3 +24,8 @@ hellomake: $(OBJ)
 #gcc -o hellomake hellomake.c hellofunc.c -I.
 #$(CC) -o hellomake hellomake.o hellofunc.o
 
+.PHONY: clean
+
+clean:
+		rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~
+
