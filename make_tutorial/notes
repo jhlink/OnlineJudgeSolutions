@@ -27,3 +27,25 @@
   
   hellomake: hellomake.o hellofunc.o              // Object files instead of header/TU files
   	$(CC) -o hellomake hellomake.o hellofunc.o 
+
+--- 
+
+### Makefile 3
+
+- Create a rule: for all files ending in *.o  
+  - A .o file depends on its .c version and the .h files included in the DEPS macro
+
+***
+DEPS = hellomake.h
+
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+***
+
+- Generate the .o file from compiling the .c file   
+  - '-c' : Generate the object file
+  - '-o $@' : Put compilation output in file named on the left side of the : 
+    - e.g. hellomake.o
+  - '$<' : the first item in the dependency list
+  - 'CFLAGS' : Add compilation flags from CFLAGS macro 
+
