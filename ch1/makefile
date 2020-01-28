@@ -21,11 +21,14 @@ PATHL = /usr/local/opt/openssl/lib/
 CC=gcc-9
 CFLAGS=-L$(PATHL) -I$(PATHI) -O2 -pipe -ansi -DONLINE_JUDGE
 
-_DEPS = hellomake.h
-DEPS = $(patsubst %,$(PATHI)%,$(_DEPS))
+# Take header files in PATHI 
+DEPS = $(wildcard $(PATHI)*.h)
 
-_OBJ = hellomake.o hellofunc.o 
-OBJ = $(patsubst %,$(PATHB)%,$(_OBJ))
+# Take source files in PATHS 
+SRCS = $(wildcard $(PATHS)*.c)
+
+# Replace pattern PATHS/*.c -> PATHB/*.o 
+OBJ = $(patsubst $(PATHS)%.c,$(PATHB)%.o,$(SRCS))
 
 LIBS=-lm -lcrypto
 
@@ -47,4 +50,5 @@ $(PATHB):
 
 clean:
 	$(CLEANUP) $(PATHB)*.o
+	$(CLEANUP) hellomake 
 

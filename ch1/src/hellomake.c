@@ -1,10 +1,8 @@
-#include <hellomake.h>
 
 int
 main()
 {
-  // call a function in another file
-  myPrintHelloMake();
+  /* call a function in another file */
 
   return (0);
 }
