@@ -16,9 +16,10 @@ endif
 PATHB = build/
 PATHI = include/
 PATHS = src/
+PATHL = /usr/local/opt/openssl/lib/
 
-CC=gcc
-CFLAGS=-I$(PATHI)
+CC=gcc-9
+CFLAGS=-L$(PATHL) -I$(PATHI) -O2 -pipe -ansi -DONLINE_JUDGE
 
 _DEPS = hellomake.h
 DEPS = $(patsubst %,$(PATHI)%,$(_DEPS))
@@ -26,10 +27,10 @@ DEPS = $(patsubst %,$(PATHI)%,$(_DEPS))
 _OBJ = hellomake.o hellofunc.o 
 OBJ = $(patsubst %,$(PATHB)%,$(_OBJ))
 
-LIBS=-lm
+LIBS=-lm -lcrypto
 
 $(PATHB)%.o: $(PATHS)%.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
 hellomake: $(OBJ) 
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
