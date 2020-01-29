@@ -1,0 +1,115 @@
+## Heads up
+
+### Makefile 1
+
+- make w/ no args executes the first rule in makefile
+- dependent files follow the ':' after the rule name.
+  - If those files change, make will re-execute the rule.   
+
+  [Rule Name]: [files...]
+  hellomake: hellomake.c hellofunc.c
+    gcc -o hellomake hellomake.c hellofunc.c -I. 
+
+- ^^ A tab must start every command
+  - e.g. the tab preceding gcc
+
+--- 
+
+### Makefile 2
+
+- The *CC* macro defines the C compiler to use. 
+- The *CFLAGS* macro defines the flags to pass to the compilation cmd.
+- Placing object files in the dependency list and in the rule informs make to compile the .c files individually then build the hellomake executable. 
+  - Missing dependency on include files -> recompile doesn't occur if header file changed.  
+
+  CC=gcc        // Compiler macro
+  CFLAGS=-I.    // Compiler Flags macro
+  
+  hellomake: hellomake.o hellofunc.o              // Object files instead of header/TU files
+  	$(CC) -o hellomake hellomake.o hellofunc.o 
+
+--- 
+
+### Makefile 3
+
+- Create a rule: for all files ending in *.o  
+  - A .o file depends on its .c version and the .h files included in the DEPS macro
+
+***
+DEPS = hellomake.h
+
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+***
+
+- Generate the .o file from compiling the .c file   
+  - '-c' : Generate the object file
+  - '-o $@' : Put compilation output in file named on the left side of the : 
+    - e.g. hellomake.o
+  - '$<' : the first item in the dependency list
+  - 'CFLAGS' : Add compilation flags from CFLAGS macro 
+
+---
+
+### Makefile 4
+
+***
+OBJ = hellomake.o hellofunc.o 
+hellomake: $(OBJ) 
+	$(CC) -o $@ $^ $(CFLAGS) 
+***
+
+- $@ : Left side of the :
+- $^ : Right side of the :
+
+- Notice Pattern: Compiler + Output File + Dependencies + Compile Flags
+v1:  gcc -o hellomake hellomake.c hellofunc.c -I.
+v2: $(CC) -o hellomake hellomake.o hellofunc.o
+v3: $(CC) -o $@ $^ $(CFLAGS) 
+
+---
+
+### Makefile 5
+
+***
+IDIR =../include
+CFLAGS=-I$(IDIR)
+_DEPS = hellomake.h
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+***
+
+- Store header files in include directory.
+  - Fix references to header files   
+  - $(patsubst %,$( x )/%,$( y ))
+    - 'x' : target directory
+    - 'y' : dependency files  
+
+***
+$(ODIR)/%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+***
+
+- When generating .o files, ensure that %o rule is prefixed with $(ODIR)/ pattern 
+- Make defines macros to declare when using any libraries
+  - e.g. -lm : math library
+
+***
+.PHONY: clean
+***
+
+- Phony rule prevents make from doing something with a file named _clean_.
+
+***
+clean:
+		rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~
+***
+
+- Creates a make rule that removes all artifacts from the [build process](https://stackoverflow.com/questions/38002190/what-is-happening-in-this-make-clean).
+  - $(ODIR)/*.o : Removes all object files
+  - *~ : Removes all files ending with ~.
+    - Emacs creates a backup copy under [filename]~ 
+  - core : When you normally get when enabling core dumps, a program crashes, and systemd isn't used.
+    - Used to debug a crash. 
+  - $(INCDIR)/*~ : Match emacs backup files in INCDIR
+    - If INCDIR isn't set, tries to find backup files in root dir. 
+    - Default behaviour if pattern doesn't match files is to leave it unexpanded. 
