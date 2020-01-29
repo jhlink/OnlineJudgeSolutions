@@ -16,11 +16,11 @@ p100_helper(uint32_t i)
   uint32_t temp = i;
 
   while ( temp != 1) {
-    if ( (temp % 2) == 0 ) {
-      temp /= 2;
+    if ( temp % 2) {
+      temp = 3 * temp + 1;
     } else {
-      temp = (3 * temp) + 1;
-    }
+      temp >>= 2;
+    } 
 
     cycle_len++;
   }
