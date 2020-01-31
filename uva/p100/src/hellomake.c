@@ -21,7 +21,7 @@ p100_helper(uint32_t i)
     if ( temp % 2) {
       temp = 3 * temp + 1;
     } else {
-      temp >>= 2;
+      temp >>= 1;
     } 
 
     cycle_len++;
@@ -46,8 +46,9 @@ p100(uint32_t start, uint32_t end)
 
     max_len = max_uint(temp_cycle_len, max_len);
 
-    printf("%u %u %u\n", start, end, max_len);
   }
+
+  printf("%u %u %u\n", start, end, max_len);
 }
 
 void
@@ -80,6 +81,6 @@ max_uint(uint32_t a, uint32_t b)
 uint32_t
 min_uint(uint32_t a, uint32_t b)
 {
-  return a > b ? a : b;
+  return a < b ? a : b;
 }
 
