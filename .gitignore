@@ -1,2 +1,4 @@
 *hellomake
 *.o
+debug/
+debug

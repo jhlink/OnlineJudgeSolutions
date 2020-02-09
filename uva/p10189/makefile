@@ -40,6 +40,9 @@ $(PATHB)%.o: $(PATHS)%.c $(DEPS)
 hellomake: $(OBJ) 
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
+debug: $(OBJ)
+	$(CC) -g -o $@ $^ $(CFLAGS) $(LIBS)
+
 #	Execute resulting binary and copy to clipboard 
 test: $(PATHB) $(TGT) 
 	cat $(INPUT_TEST) | ./$(TGT) > output.txt 
