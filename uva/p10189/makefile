@@ -64,4 +64,5 @@ $(PATHB):
 clean:
 	$(CLEANUP) $(PATHB)*.o
 	$(CLEANUP) hellomake 
+	$(CLEANUP) debug 
 
