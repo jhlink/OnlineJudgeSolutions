@@ -18,6 +18,7 @@ PATHS = src/
 PATHB = $(PATHS)build/
 PATHL = /usr/local/opt/openssl/lib/
 INPUT_TEST = test-cases/input.txt
+INPUT_VTEST = test-cases/vinput.txt
 
 CC=gcc-9
 CFLAGS=-L$(PATHL) -I$(PATHI) -O2 -pipe -ansi -DONLINE_JUDGE
@@ -42,6 +43,10 @@ hellomake: $(OBJ)
 
 debug: $(OBJ)
 	$(CC) -g -o $@ $^ $(CFLAGS) $(LIBS)
+
+#	Execute resulting binary and copy to clipboard 
+vtest: $(PATHB) $(TGT) 
+	cat $(INPUT_VTEST) | ./$(TGT)
 
 #	Execute resulting binary and copy to clipboard 
 test: $(PATHB) $(TGT) 
