@@ -33,19 +33,18 @@ process_input()
   uint32_t m_cols = 0;
   char array[100];
 
-
   while ( scanf("%u %u\n", &n_lines, &m_cols) == 2 ) {
     printf("%u %u\n", n_lines, m_cols);
+
     if ( !n_lines && !m_cols ) {
       break;
     }
 
     for ( i = 0; i < n_lines; ++i) {
-      memset(array, 0, 100);
-      if ( fgets( array, sizeof array, stdin) )  {
-        printf("%s", array);
-      }
+      fgets( array + (m_cols * i), m_cols + 2, stdin);
     }
+
+    print_array(n_lines, m_cols, array);
   }
 }
 
