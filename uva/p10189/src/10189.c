@@ -11,6 +11,21 @@ uint32_t min_uint(uint32_t a, uint32_t b);
 uint32_t max_uint(uint32_t a, uint32_t b);
 
 void
+print_array(uint32_t rows, uint32_t cols, char mn_mtx[static rows * cols])
+{
+  int t_row = 0;
+  int t_col = 0;
+
+  for ( t_row = 0; t_row < rows; ++t_row ) {
+    for ( t_col = 0; t_col < cols; ++t_col ) {
+      putchar(mn_mtx[( t_row * cols ) + t_col]);
+    }
+
+    putchar('\n');
+  }
+}
+
+void
 process_input()
 {
   int i = 0;
