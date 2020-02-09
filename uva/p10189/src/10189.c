@@ -1,0 +1,58 @@
+/* https://onlinejudge.org/external/1/100.pdf */
+
+#include <stdio.h>
+#include <string.h> /* Memset*/
+#include <stdint.h>
+#include <math.h>
+
+#define NDEBUG
+
+uint32_t min_uint(uint32_t a, uint32_t b);
+uint32_t max_uint(uint32_t a, uint32_t b);
+
+void
+process_input()
+{
+  int i = 0;
+  uint32_t n_lines = 0;
+  uint32_t m_cols = 0;
+  char array[100];
+
+
+  while ( scanf("%u %u\n", &n_lines, &m_cols) == 2 ) {
+    printf("%u %u\n", n_lines, m_cols);
+    if ( !n_lines && !m_cols ) {
+      break;
+    }
+
+    for ( i = 0; i < n_lines; ++i) {
+      memset(array, 0, 100);
+      if ( fgets( array, sizeof array, stdin) )  {
+        printf("%s", array);
+      }
+    }
+  }
+}
+
+
+int
+main()
+{
+  process_input();
+  return (0);
+}
+
+/* Helper functions */
+
+uint32_t
+max_uint(uint32_t a, uint32_t b)
+{
+  return a > b ? a : b;
+}
+
+uint32_t
+min_uint(uint32_t a, uint32_t b)
+{
+  return a < b ? a : b;
+}
+
