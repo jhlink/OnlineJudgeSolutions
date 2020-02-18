@@ -41,7 +41,7 @@ $(PATHB)%.o: $(PATHS)%.c $(DEPS)
 hellomake: $(OBJ) 
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
-debug: $(OBJ)
+debug: $(SRCS)
 	$(CC) -g -o $@ $^ $(CFLAGS) $(LIBS)
 
 #	Execute resulting binary and copy to clipboard 
@@ -70,4 +70,5 @@ clean:
 	$(CLEANUP) $(PATHB)*.o
 	$(CLEANUP) hellomake 
 	$(CLEANUP) debug 
+	$(CLEANUP) -rf *.dSYM/ 
 
