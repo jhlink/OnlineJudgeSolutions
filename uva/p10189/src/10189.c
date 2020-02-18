@@ -54,6 +54,38 @@ erase_matrix(uint32_t rows, uint32_t cols, char mn_mtx[static rows * cols])
 }
 
 void
+traverse_matrix(uint32_t rows, uint32_t cols, char mn_mtx[static rows * cols])
+{
+
+
+  int t_row = 0;
+  int t_col = 0;
+
+  erase_matrix(rows, cols, mn_mtx);
+
+  for (t_row = 0; t_row < rows; ++t_row) {
+    for (t_col = 0; t_col < cols; ++t_col) {
+      if ( mn_mtx[t_row * cols + t_col] == '*' ) {
+        /*Top row*/
+        mark_cell(t_row - 1, t_col - 1, mn_mtx, rows, cols);
+        mark_cell(t_row - 1, t_col, mn_mtx, rows, cols);
+        mark_cell(t_row - 1, t_col + 1, mn_mtx, rows, cols);
+
+        /*Mid row*/
+        mark_cell(t_row, t_col - 1, mn_mtx, rows, cols);
+        mark_cell(t_row, t_col + 1, mn_mtx, rows, cols);
+
+        /*Bottom row*/
+        mark_cell(t_row + 1, t_col - 1, mn_mtx, rows, cols);
+        mark_cell(t_row + 1, t_col, mn_mtx, rows, cols);
+        mark_cell(t_row + 1, t_col + 1, mn_mtx, rows, cols);
+      }
+    }
+  }
+}
+
+
+void
 process_input()
 {
   int i = 0;
