@@ -87,21 +87,24 @@ traverse_matrix(uint32_t rows, uint32_t cols, char mn_mtx[static rows * cols])
 
 
 void
-process_input(int *test)
+process_input()
 {
   int i = 0;
   uint32_t n_lines = 0;
   uint32_t m_cols = 0;
+  int test = 1;
   char* array;
 
   while ( scanf("%u %u\n", &n_lines, &m_cols) == 2 ) {
     if ( !n_lines && !m_cols ) {
       break;
+    } else if ( test > 1 ) {
+      putchar('\n');
     }
 
-    (*test)++;
-    printf("Field #%d:\n", *test);
     array = calloc(n_lines * m_cols + 1, sizeof(*array));
+
+    printf("Field #%d:\n", test);
 
     for ( i = 0; i < n_lines; ++i) {
       fgets( array + (m_cols * i), m_cols + 2, stdin);
@@ -109,7 +112,8 @@ process_input(int *test)
 
     traverse_matrix(n_lines, m_cols, array);
     print_array(n_lines, m_cols, array);
-    putchar('\n');
+
+    test++;
     free(array);
   }
 }
@@ -118,8 +122,7 @@ process_input(int *test)
 int
 main()
 {
-  int test = 0;
-  process_input(&test);
+  process_input();
   return (0);
 }
 
