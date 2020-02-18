@@ -26,6 +26,19 @@ print_array(uint32_t rows, uint32_t cols, char mn_mtx[static rows * cols])
 }
 
 void
+mark_cell(uint32_t row, uint32_t col, char mn_mtx[static row * col],
+          uint32_t row_width, uint32_t col_width)
+{
+  if ( row < 0 || row >= row_width || col < 0 || col >= col_width) {
+    return;
+  }
+
+  if ( mn_mtx[ row * col_width + col ] != '*' ) {
+    mn_mtx[ row * col_width + col ]++;
+  }
+}
+
+void
 erase_matrix(uint32_t rows, uint32_t cols, char mn_mtx[static rows * cols])
 {
   int t_row = 0;
