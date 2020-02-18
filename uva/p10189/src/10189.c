@@ -1,4 +1,4 @@
-/* https://onlinejudge.org/external/1/100.pdf */
+/* https://onlinejudge.org/external/101/10189.pdf */
 
 #include <stdio.h>
 #include <stdlib.h>
