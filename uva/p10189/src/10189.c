@@ -1,6 +1,7 @@
 /* https://onlinejudge.org/external/1/100.pdf */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h> /* Memset*/
 #include <stdint.h>
 #include <math.h>
@@ -91,7 +92,7 @@ process_input(int *test)
   int i = 0;
   uint32_t n_lines = 0;
   uint32_t m_cols = 0;
-  char array[9000];
+  char* array;
 
   while ( scanf("%u %u\n", &n_lines, &m_cols) == 2 ) {
     if ( !n_lines && !m_cols ) {
@@ -100,6 +101,7 @@ process_input(int *test)
 
     (*test)++;
     printf("Field #%d:\n", *test);
+    array = calloc(n_lines * m_cols + 1, sizeof(*array));
 
     for ( i = 0; i < n_lines; ++i) {
       fgets( array + (m_cols * i), m_cols + 2, stdin);
@@ -108,6 +110,7 @@ process_input(int *test)
     traverse_matrix(n_lines, m_cols, array);
     print_array(n_lines, m_cols, array);
     putchar('\n');
+    free(array);
   }
 }
 
