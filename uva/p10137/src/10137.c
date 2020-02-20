@@ -12,24 +12,16 @@ double min_double(double a, double b);
 double max_double(double a, double b);
 double trunc_to_hundreths(double ival);
 
-double
-ceil_round_to_hundredth(double target)
-{
-  double int_target = target * 100;
-  int_target = trunc(int_target);
-  int_target /= 100;
-  return int_target;
-}
-
-double
-floor_round_to_hundredth(double target)
-{
-  double int_target = target * 100;
-  int_target = trunc(int_target);
-  int_target /= 100;
-
-  return int_target;
-
+void
+parse_totals(uint32_t num_students, uint32_t totals[num_students], double *grand_total) {
+    uint32_t i = 0;
+    for ( i = 0; i < num_students; ++i ) {
+      uint32_t dollars = 0;
+      uint32_t cents = 0;
+      scanf("%d.%d\n", &dollars, &cents);
+      totals[i] = (dollars * 100) + cents;
+      (*grand_total) += totals[i];
+    }
 }
 
 void
@@ -37,54 +29,38 @@ process_input()
 {
   int i = 0;
   uint32_t num_students = 0;
-  double *student_totals = NULL;
 
-  double grand_total_ceil = 0.0f;
-  double grand_total_floor = 0.0f;
-  double equalize_total = 0.0f;
-
-  double neg_equalize_total_low = 0.0f;
-  double neg_equalize_total_high = 0.0f;
+  uint32_t *student_totals = NULL;
+  double sum = 0.0f;
+  double low_sum = 0.0f;
+  double high_sum = 0.0f;
+  double avg = 0.0f;
 
   while ( scanf("%u\n", &num_students) == 1) {
     if ( !num_students ) {
       break;
     } else {
       student_totals = calloc( num_students, sizeof( *student_totals ));
+      high_sum = 0.0f;
+      low_sum = 0.0f;
+      sum = 0.0f;
     }
 
-   grand_total_ceil = 0.0f;
-   grand_total_floor = 0.0f;
-   equalize_total = 0.0f;
+    parse_totals(num_students, student_totals, &sum);  
 
-
-    for ( i = 0; i < num_students; ++i ) {
-      scanf("%lf\n", (student_totals + i));
-      grand_total_ceil += ceil_round_to_hundredth(*(student_totals + i));
-      grand_total_floor += floor_round_to_hundredth(*(student_totals + i));
-    }
-
-    grand_total_ceil = ceil_round_to_hundredth((grand_total_ceil * 100 /
-                       num_students)) / 100;
-    grand_total_floor = floor_round_to_hundredth((grand_total_floor * 100 /
-                        num_students)) / 100;
-
-    neg_equalize_total_low = 0.0f;
-    neg_equalize_total_high = 0.0f;
+    avg = (double)sum / num_students;
 
     for ( i = 0; i < num_students; ++i ) {
-      if ( student_totals[i] >= grand_total_floor ) {
-        neg_equalize_total_high += trunc_to_hundreths(student_totals[i] - grand_total_ceil);
+      if ( student_totals[i] >= avg ) {
+        /* Type cast is important for truncation and precision */
+        high_sum += (int) (student_totals[i] - avg) / 100.0;
       } else {
-        neg_equalize_total_low += trunc_to_hundreths(grand_total_floor - student_totals[i]);
+        low_sum += (int) (avg - student_totals[i]) / 100.0;
       }
     }
 
-    neg_equalize_total_low = trunc_to_hundreths(neg_equalize_total_low);
-    neg_equalize_total_high = trunc_to_hundreths(neg_equalize_total_high);
-
-    equalize_total =  max_double(neg_equalize_total_low, neg_equalize_total_high);
-    printf("$%.2lf\n", equalize_total);
+    sum =  max_double(low_sum, high_sum);
+    printf("$%.2lf\n", sum);
 
     free(student_totals);
   }
