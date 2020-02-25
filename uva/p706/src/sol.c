@@ -1,4 +1,4 @@
-/* https://onlinejudge.org/external/1/100.pdf */
+/* https://onlinejudge.org/external/7/706.pdf */
 
 #include <stdlib.h> /* alloc funcs */
 #include <string.h> /* memset*/
