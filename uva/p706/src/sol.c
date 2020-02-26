@@ -40,7 +40,7 @@ void
 print_digits(int scale, char input_digits[MAX_DIGIT_LEN])
 {
   int row_count = 2 * scale + 3;
-  int col_count = scale + 2;
+  int col_count = scale + 3;
   int lcd_digit_len = strlen(input_digits);
   char *lcd_row = calloc(col_count * lcd_digit_len, sizeof(*lcd_row)) ;
   int i, j, digit_index, digit;
@@ -48,7 +48,7 @@ print_digits(int scale, char input_digits[MAX_DIGIT_LEN])
   for ( i = 0; i < row_count; ++i ) {
     for ( j = 0; j < lcd_digit_len; ++j ) {
       digit = input_digits[j] - '0';
-      digit_index = j * (3 + scale);
+      digit_index = j * col_count;
 
       if ( (i % (scale + 1)) == 0 ) {
         int test = i / (scale + 1) * 3;
