@@ -10,7 +10,7 @@ uint32_t max_uint(uint32_t a, uint32_t b);
 
 #define LCD_MATRIX_DIMEN 7
 #define NUM_OF_DIGITS 10
-#define MAX_DIGIT_LEN 8
+#define MAX_DIGIT_LEN 9
 
 /* LCD matrix addressed as follows.
  *     0
